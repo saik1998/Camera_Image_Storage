@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!--edit text for adding course name-->
+    <ImageView
+        android:id="@+id/idEdtCourseName"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_baseline_camera_alt_24"
+        android:layout_toStartOf="@id/idBtnSave"
+        android:layout_toLeftOf="@id/idBtnSave"
+        android:hint="Enter course Name" />
+
+
+
+    <!--button for adding data to recycler view-->
+    <Button
+        android:id="@+id/idBtnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idEdtCourseName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:text="Add " />
+
+    <!--button for saving data to shared prefs-->
+    <Button
+        android:id="@+id/idBtnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:text="Save " />
+
+    <!--recycler view to display our data-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRVCourses"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/idEdtCourseName" />
+
+
+
+</LinearLayout>
+
