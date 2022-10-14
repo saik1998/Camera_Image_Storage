@@ -9,44 +9,53 @@
 
     <!--edit text for adding course name-->
     <ImageView
-        android:id="@+id/idEdtCourseName"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:id="@+id/imgeview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher_background"
         android:layout_margin="10dp"
-        android:src="@drawable/ic_baseline_camera_alt_24"
-        android:layout_toStartOf="@id/idBtnSave"
-        android:layout_toLeftOf="@id/idBtnSave"
-        android:hint="Enter course Name" />
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/idBtnAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:text="Add " />
+
+        <!--button for saving data to shared prefs-->
+        <Button
+            android:id="@+id/idBtnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:layout_weight="0.5"
+            android:text="Save " />
+
+
+    </LinearLayout>
 
 
 
     <!--button for adding data to recycler view-->
-    <Button
-        android:id="@+id/idBtnAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/idEdtCourseName"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        android:text="Add " />
-
-    <!--button for saving data to shared prefs-->
-    <Button
-        android:id="@+id/idBtnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        android:text="Save " />
 
     <!--recycler view to display our data-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/idRVCourses"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/idEdtCourseName" />
+        />
 
 
 

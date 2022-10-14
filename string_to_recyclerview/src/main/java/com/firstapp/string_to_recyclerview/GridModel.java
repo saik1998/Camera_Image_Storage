@@ -1,8 +1,13 @@
 package com.firstapp.string_to_recyclerview;
 
+import android.widget.ImageView;
+
 public class GridModel {
     private String courseName;
     private int image;
+
+    public GridModel(ImageView courseNameEdt) {
+    }
 
 
 //    public ModelClass(String courseName) {

@@ -12,7 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+    import com.bumptech.glide.Glide;
+
+    import java.io.File;
+    import java.util.ArrayList;
 
 
 public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
@@ -44,15 +47,25 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
             //  holder.courseNameTV.setText(modal.getCourseName());
             holder.courseNameTV.setImageResource(modal.getImage());
 
+            Glide.with(holder.courseNameTV.getContext())
+                    .load(new File(String.valueOf(modal.getImage())))
+                    .into(holder.courseNameTV);
+
+
         }
 
         @Override
         public int getItemCount() {
             // returning the size of array list.
-            return courseModalArrayList.size();
-        }
+                return courseModalArrayList.size();
+            }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+    public void updateList(ArrayList<GridModel> courseModalArrayList) {
+
+    }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
             // creating variables for our views.
             //  private TextView courseNameTV;
