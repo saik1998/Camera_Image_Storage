@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity  {
     private Button addBtn, saveBtn;
     private RecyclerView courseRV;
 
+    RecyclerView recyclerView;
+
     private AlertDialog alertDialog;
 
     private static final int pic_id = 123;
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 //data loaded in recycler view
-//                loadData();
+                loadData();
 
                 buildRecyclerView();
 //
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity  {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                saveData();
+                saveData();
             }
         });
     }
@@ -115,18 +117,39 @@ public class MainActivity extends AppCompatActivity  {
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//
+//
+
+
 
 
                     Bitmap bitmap= (Bitmap) data.getExtras().get("data");
                     courseNameEdt.setImageBitmap(bitmap);
+//                    courseModalArrayList.set(1,new GridModel(bitmap));
 
-                    buildRecyclerView();
-
-
-
+                    courseModalArrayList.add(new GridModel(bitmap));
 
 
-//                    saveData();
+
+
+
+//                    GridLayoutManager manager = new GridLayoutManager(this,2);
+//                    courseRV.setHasFixedSize(true);
+//
+//                    // setting layout manager to our recycler view.
+//                    courseRV.setLayoutManager(manager);
+//
+//                    // setting adapter to our recycler view.
+//                    courseRV.setAdapter(adapter);
+//
+////                    buildRecyclerView();
+
+
+
+
+
+
+                    saveData();
 
 
 
@@ -147,7 +170,7 @@ public class MainActivity extends AppCompatActivity  {
 
     private void buildRecyclerView() {
         // initializing our adapter class.
-        courseModalArrayList.add(new GridModel(courseNameEdt));
+
         adapter = new GridAdapter(courseModalArrayList, MainActivity.this);
         // adding layout manager to our recycler view.
         GridLayoutManager manager = new GridLayoutManager(this,2);
@@ -159,59 +182,59 @@ public class MainActivity extends AppCompatActivity  {
         // setting adapter to our recycler view.
         courseRV.setAdapter(adapter);
     }
-//
-//    private void loadData() {
-//        // method to load arraylist from shared prefs
-//        // initializing our shared prefs with name as
-//        // shared preferences.
-//        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-//
-//        // creating a variable for gson.
-//        Gson gson = new Gson();
-//
-//        // below line is to get to string present from our
-//        // shared prefs if not present setting it as null.
-//        String json = sharedPreferences.getString("courses", null);
-//
-//        // below line is to get the type of our array list.
-//        Type type = new TypeToken<ArrayList<GridModel>>() {}.getType();
-//
-//        // in below line we are getting data from gson
-//        // and saving it to our array list
-//        courseModalArrayList = gson.fromJson(json, type);
-//        // checking below if the array list is empty or not
-//        if (courseModalArrayList == null)
-//        {
-//            // if the array list is empty
-//            // creating a new array list.
-//            courseModalArrayList = new ArrayList<>();
-//        }
-//    }
-//    @SuppressLint("NewApi")
-//    private void saveData() {
-//        // method for saving the data in array list.
-//        // creating a variable for storing data in
-//        // shared preferences.
-//        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-//
-//        // creating a variable for editor to
-//        // store data in shared preferences.
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//
-//        // creating a new variable for gson.
-//        Gson gson = new Gson();
-//        // getting data from gson and storing it in a string.
-//        String json = gson.toJson(courseModalArrayList);
-////        courseModalArrayList.add(new GridModel(courseNameEdt));
-//        // below line is to save data in shared
-//        // prefs in the form of string.
-//        editor.putString("courses", json);
-//        // below line is to apply changes
-//        // and save data in shared prefs.
-//        editor.apply();
-//        // after saving data we are displaying a toast message.
-//        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
-//    }
+
+    private void loadData() {
+        // method to load arraylist from shared prefs
+        // initializing our shared prefs with name as
+        // shared preferences.
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+
+        // creating a variable for gson.
+        Gson gson = new Gson();
+
+        // below line is to get to string present from our
+        // shared prefs if not present setting it as null.
+        String json = sharedPreferences.getString("courses", null);
+
+        // below line is to get the type of our array list.
+        Type type = new TypeToken<ArrayList<GridModel>>() {}.getType();
+
+        // in below line we are getting data from gson
+        // and saving it to our array list
+        courseModalArrayList = gson.fromJson(json, type);
+        // checking below if the array list is empty or not
+        if (courseModalArrayList == null)
+        {
+            // if the array list is empty
+            // creating a new array list.
+            courseModalArrayList = new ArrayList<>();
+        }
+    }
+    @SuppressLint("NewApi")
+    private void saveData() {
+        // method for saving the data in array list.
+        // creating a variable for storing data in
+        // shared preferences.
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+
+        // creating a variable for editor to
+        // store data in shared preferences.
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // creating a new variable for gson.
+        Gson gson = new Gson();
+        // getting data from gson and storing it in a string.
+        String json = gson.toJson(courseModalArrayList);
+//        courseModalArrayList.add(new GridModel(courseNameEdt));
+        // below line is to save data in shared
+        // prefs in the form of string.
+        editor.putString("courses", json);
+        // below line is to apply changes
+        // and save data in shared prefs.
+        editor.apply();
+        // after saving data we are displaying a toast message.
+        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+    }
 
 
 

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
@@ -36,7 +37,10 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageView imageView;
     ImageAdapter imageAdapter;
-    ArrayList<ImageModel> imageModelArrayList;
+    ArrayList<Bitmap> imageModelArrayList=new ArrayList<>();
+    Button load;
+    Bitmap bitmap;
+    ImageModel imageModel;
 
 
     @Override
@@ -48,19 +52,24 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         imageView = findViewById(R.id.imgeview);
 
+        imageModelArrayList = new ArrayList<>();
+        imageModel = new ImageModel(this);
 
-//
-//        // adding layout manager to our recycler view.
-//
-
-
-//        imageAdapter = new ImageAdapter(this, imageModelArrayList);
-//        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setAdapter(imageAdapter);
+        load=findViewById(R.id.load);
 
 
+        load.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+//                imageModelArrayList.add(new ImageModel(bitmap));
+                imageAdapter=new ImageAdapter(getApplicationContext(),imageModelArrayList);
+                recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),3));
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setAdapter(imageAdapter);
 
+            }
+        });
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
     private void askCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, pic_id);
@@ -104,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == pic_id && resultCode == RESULT_OK) {
+
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             View root = getLayoutInflater().inflate(R.layout.custom_dialog, null);
             builder.setView(root);
@@ -111,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
             Button cancel = root.findViewById(R.id.button_cancel);
             Button save = root.findViewById(R.id.continue_button);
-
 
             cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,45 +131,25 @@ public class MainActivity extends AppCompatActivity {
             });
 
             save.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-
-
-                    Bitmap bitmap= (Bitmap) data.getExtras().get("data");
+//debug
+                    bitmap= (Bitmap) data.getExtras().get("data");
                     imageView.setImageBitmap(bitmap);
-
-                    saveData();
-
-
-//                    imageModelArrayList.add(new ImageModel(imageView));
-//                    imageAdapter = new ImageAdapter(getApplicationContext(), imageModelArrayList);
-//                    recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
-//                    recyclerView.setHasFixedSize(true);
+                    imageModel.setImage(bitmap);
+                    imageModelArrayList.add(bitmap);
 
 
 
 
-
-//
-//                    // setting layout manager to our recycler view.
-//                     recyclerView.setLayoutManager(manager);
-//
-//                    // setting adapter to our recycler view.
-//                    recyclerView.setAdapter(imageAdapter);
-
-
-
-//                    imageModelArrayList.add(new ImageModel(imageView));
-
+//                    saveData();
 
 
                     alertDialog.dismiss();
                     Toast.makeText(MainActivity.this, "continue", Toast.LENGTH_SHORT).show();
 
 
-//                    imageModelArrayList.add(new ImageModel());
-//                    // notifying adapter when new data added.
-//                    imageAdapter.notifyItemInserted(imageModelArrayList.size());
 
                 }
             });
@@ -173,40 +160,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void saveData() {
+//    private void addimagebitmap(Bitmap bitmap) {
+//            ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
+//            bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
+//            byte[] b=outputStream.toByteArray();
+//            String temp= Base64.encodeToString(b,Base64.DEFAULT);
+//
+//
+//            imageModelArrayList.add(new ImageModel(temp));
+//        }
 
-        // method for saving the data in array list.
-        // creating a variable for storing data in
+
+
+
+    private void saveData() {
         // shared preferences.
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-
-        // creating a variable for editor to
-        // store data in shared preferences.
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        // creating a new variable for gson.
         Gson gson = new Gson();
 
         // getting data from gson and storing it in a string.
         String json = gson.toJson(imageModelArrayList);
-//        imageModelArrayList.add(new ImageModel(imageView));
-//        imageAdapter = new ImageAdapter(getApplicationContext(), imageModelArrayList);
-//        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
-//        recyclerView.setHasFixedSize(true);
-
-        // below line is to save data in shared
-        // prefs in the form of string.
         editor.putString("courses", json);
-        // below line is to apply changes
-        // and save data in shared prefs.
-
         editor.apply();
-
-        // after saving data we are displaying a toast message.
-//        Toast.makeText(this, "Saved Array List to Shared preferences. ", Toast.LENGTH_SHORT).show();
-
-
-
     }
 
 

@@ -1,24 +1,27 @@
 package com.firstapp.camera_image_storage;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 public class ImageModel {
-    int image;
+   Bitmap image;
+   Context context;
 
-    public ImageModel(int image) {
-        this.image = image;
+    public ImageModel(Context context) {
+        this.context = context;
     }
 
-    public ImageModel(ImageView imageView) {
-    }
+//    public ImageModel(Bitmap imageView) {
+//        this.image=imageView;
+//
+//    }
 
-    public int getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
-
-
 }

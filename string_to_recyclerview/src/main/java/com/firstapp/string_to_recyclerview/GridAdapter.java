@@ -24,13 +24,22 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
         private ArrayList<GridModel> courseModalArrayList;
         private Context context;
 
-        // creating a constructor for our variables.
+    public GridAdapter(ArrayList<GridModel> courseModalArrayList, MainActivity mainActivity) {
+        //modellist size =1
+        this.courseModalArrayList=courseModalArrayList;
+
+        //context:null
+        this.context=mainActivity;
+    }
 
 
-        public GridAdapter(ArrayList<GridModel> courseModalArrayList, Context context) {
-            this.courseModalArrayList = courseModalArrayList;
-            this.context = context;
-        }
+    // creating a constructor for our variables.
+
+
+//        public GridAdapter(ArrayList<GridModel> courseModalArrayList, Context context) {
+//            this.courseModalArrayList = courseModalArrayList;
+//            this.context = context;
+//        }
 
         @NonNull
         @Override
@@ -45,9 +54,9 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
             // setting data to our views of recycler view.
             GridModel modal = courseModalArrayList.get(position);
             //  holder.courseNameTV.setText(modal.getCourseName());
-            holder.courseNameTV.setImageResource(modal.getImage());
+//            holder.courseNameTV.setImageResource(modal.getImage());
 
-            Glide.with(holder.courseNameTV.getContext())
+            Glide.with(context)
                     .load(new File(String.valueOf(modal.getImage())))
                     .into(holder.courseNameTV);
 
@@ -60,20 +69,14 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
                 return courseModalArrayList.size();
             }
 
-    public void updateList(ArrayList<GridModel> courseModalArrayList) {
-
-    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
             // creating variables for our views.
             //  private TextView courseNameTV;
             private ImageView courseNameTV;
-
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
-
                 // initializing our views with their ids.
                 courseNameTV = itemView.findViewById(R.id.idTVCourseName);
 

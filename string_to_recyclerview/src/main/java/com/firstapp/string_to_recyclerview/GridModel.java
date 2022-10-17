@@ -1,37 +1,29 @@
 package com.firstapp.string_to_recyclerview;
 
-import android.widget.ImageView;
+import android.graphics.Bitmap;
+import android.net.Uri;
 
 public class GridModel {
-    private String courseName;
-    private int image;
-
-    public GridModel(ImageView courseNameEdt) {
-    }
-
-
+    private Bitmap image;
 //    public ModelClass(String courseName) {
 //        this.courseName = courseName;
 //    }
 
     // creating getter and setter methods.
-    public String getCourseName() {
-        return courseName;
-    }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
 
-    public GridModel(int image) {
+    public GridModel(Bitmap image) {
         this.image = image;
     }
 
-    public int getImage() {
+    public GridModel(Uri bitmap) {
+    }
+
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 }

@@ -10,16 +10,18 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.util.ArrayList;
 
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewModel> {
     Context context;
+    ArrayList<Bitmap> imageModelArrayList;
 
-    ArrayList<ImageModel> imageModelArrayList;
 
-    public ImageAdapter(Context context, ArrayList<ImageModel> imageModelArrayList) {
+    public ImageAdapter(Context context, ArrayList<Bitmap> imageModelArrayList) {
         this.context = context;
         this.imageModelArrayList = imageModelArrayList;
     }
@@ -34,9 +36,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewModel>
 
     @Override
     public void onBindViewHolder(@NonNull ImageAdapter.MyViewModel holder, int position) {
-        ImageModel imageModel=imageModelArrayList.get(position);
 
-        holder.imageView.setImageResource(imageModel.getImage());
+//        ImageModel imageModel=imageModelArrayList.get(position);
+
+        holder.imageView.setImageBitmap(imageModelArrayList.get(position));
+        //  holder.courseNameTV.setText(modal.getCourseName());
+//            holder.courseNameTV.setImageResource(modal.getImage());
+
+//        Glide.with(context)
+//                .load(new File(String.valueOf(imageModel.getImage())))
+//                .into(holder.imageView);
 
     }
 
