@@ -13,28 +13,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imgeview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_background"
-            android:layout_margin="10dp"
-            android:layout_gravity="center"/>
-
-        <Button
-            android:id="@+id/load"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="load"
-            android:layout_gravity="center"
-            />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/custom_recycler"
-            android:layout_margin="10dp"/>
+            style="@style/RecyclerView"
+            tools:listitem="@layout/custom_recycler"/>
 
     </LinearLayout>
 
@@ -62,11 +44,8 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        style="@style/Floating"
         android:id="@+id/camera_id"
-        android:layout_margin="10dp"
         android:src="@drawable/ic_baseline_camera_alt_24" />
 
 

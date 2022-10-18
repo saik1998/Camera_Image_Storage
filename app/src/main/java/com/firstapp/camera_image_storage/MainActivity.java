@@ -11,12 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,7 +27,9 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,13 +38,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int pic_id = 123;
 
 
-    AlertDialog alertDialog;
-    RecyclerView recyclerView;
-    ImageView imageView;
+    public static AlertDialog alertDialog;
+    public static RecyclerView recyclerView;
     ImageAdapter imageAdapter;
-    ArrayList<Bitmap> imageModelArrayList=new ArrayList<>();
-    Button load;
-    Bitmap bitmap;
+    public static ArrayList<Bitmap> imageModelArrayList=new ArrayList<>();
+    public static Bitmap bitmap;
     ImageModel imageModel;
 
 
@@ -50,26 +53,15 @@ public class MainActivity extends AppCompatActivity {
 
         camera = findViewById(R.id.camera_id);
         recyclerView = findViewById(R.id.recycler_view);
-        imageView = findViewById(R.id.imgeview);
 
         imageModelArrayList = new ArrayList<>();
         imageModel = new ImageModel(this);
 
-        load=findViewById(R.id.load);
 
 
-        load.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-//                imageModelArrayList.add(new ImageModel(bitmap));
-                imageAdapter=new ImageAdapter(getApplicationContext(),imageModelArrayList);
-                recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),3));
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(imageAdapter);
 
-            }
-        });
+
+
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +111,14 @@ public class MainActivity extends AppCompatActivity {
 
             Button cancel = root.findViewById(R.id.button_cancel);
             Button save = root.findViewById(R.id.continue_button);
+            ImageView alertImage=root.findViewById(R.id.dialog_image);
+
+
+            bitmap= (Bitmap) data.getExtras().get("data");
+            alertImage.setImageBitmap(bitmap);
+            imageModel.setImage(bitmap);
+////            imageModelArrayList.add(bitmap);
+
 
             cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -136,14 +136,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
 //debug
                     bitmap= (Bitmap) data.getExtras().get("data");
-                    imageView.setImageBitmap(bitmap);
                     imageModel.setImage(bitmap);
                     imageModelArrayList.add(bitmap);
 
+                    saveData();
 
-
-
-//                    saveData();
+                    loadData();
 
 
                     alertDialog.dismiss();
@@ -159,31 +157,79 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-
-//    private void addimagebitmap(Bitmap bitmap) {
-//            ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
-//            bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
-//            byte[] b=outputStream.toByteArray();
-//            String temp= Base64.encodeToString(b,Base64.DEFAULT);
 //
+    private void loadData() {
+
+        imageAdapter=new ImageAdapter(getApplicationContext(),imageModelArrayList);
+        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),3));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(imageAdapter);
+    }
 //
-//            imageModelArrayList.add(new ImageModel(temp));
-//        }
 
 
 
+//
+//    private void saveData() {
+//        // shared preferences.
+//        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        Gson gson = new Gson();
+//
+//        // getting data from gson and storing it in a string.
+//        String json = gson.toJson(imageModelArrayList);
+//        editor.putString("courses", json);
+//        editor.apply();
+//    }
 
-    private void saveData() {
-        // shared preferences.
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+    @SuppressLint("NewApi")
+    public void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared prederences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-
-        // getting data from gson and storing it in a string.
         String json = gson.toJson(imageModelArrayList);
         editor.putString("courses", json);
         editor.apply();
+        Toast.makeText(this, "Images saved", Toast.LENGTH_SHORT).show();
     }
+
+
+
+
+
+//    private void loadData() {
+//
+//
+//
+//        // method to load arraylist from shared prefs
+////        // initializing our shared prefs with name as
+////        // shared preferences.
+//        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
+////
+////        // creating a variable for gson.
+//        Gson gson = new Gson();
+////
+////        // below line is to get to string present from our
+////        // shared prefs if not present setting it as null.
+//        String json = sharedPreferences.getString("courses", null);
+////
+////        // below line is to get the type of our array list.
+//        Type type = new TypeToken<ArrayList<Bitmap>>() {
+//        }.getType();
+////
+////        // in below line we are getting data from gson
+////        // and saving it to our array list
+//        imageModelArrayList = gson.fromJson(json, type);
+////        // checking below if the array list is empty or not
+//        if (imageModelArrayList == null) {
+////            // if the array list is empty
+////            // creating a new array list.
+//            imageModelArrayList = new ArrayList<>();
+//
+//
+//
+//        }
+//    }
 
 
 }
